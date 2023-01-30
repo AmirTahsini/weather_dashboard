@@ -33,8 +33,6 @@ function handleSearchFormSubmit(event) {
         getCurrent(lat, lon);
     })
 
-    //THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
-
   }
  
   function getCurrent(lat, lon) {
@@ -80,23 +78,59 @@ function handleSearchFormSubmit(event) {
 
     // var queryForecast = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&units=imperial&appid=3a7640f2a9253115aec75d7159ec5537';
 
-    
-
   function buttonMenu() {
     for(var i = 0; i <cities.length; i++) {
     var button = document.createElement('button');
     button.textContent = cities[i];
     button.setAttribute('value', cities[i]);
+    document.getElementById('button-box').append(button);
     button.onclick = function() {
       console.log(this.value);
+      var queryCoordinates = 'http://api.openweathermap.org/geo/1.0/direct?q=' + this.value + '&appid=3a7640f2a9253115aec75d7159ec5537';
+      fetch(queryCoordinates)
+        .then(function (response) {
+        if (!response.ok) {
+          throw response.json();
+        }
+        return response.json();
+        })  
+      .then(function (data) {
+          console.log(data);
+          var lat = data[0].lat;
+          var lon =data[0].lon;
+          getCurrent(lat, lon);
+      })
     }
-    document.getElementById('button-box').append(button);
     }
  }
   buttonMenu();
 
+  function clearBox(className) {
+    document.getElementsByClassName(className).innerHTML = "";
+}
+
 function printForecast(data) {
   console.log(data);
+  var forecastBody = document.createElement('div');
+    forecastBody.classList.add('forecastBody', 'card');
+    var cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+    var dateDisplay = document.createElement('p');
+    dateDisplay.classList.add('card-title');
+    dateDisplay.textContent = "Date: " + data.dt_txt.split(" ")[0];
+    console.log(dateDisplay);
+    var pTemp = document.createElement('p');
+    pTemp.classList.add('card-text');
+    pTemp.textContent = "Temp: " + Math.round(data.main.temp);
+    var pHumidity = document.createElement('p');
+    pHumidity.classList.add('card-text');
+    pHumidity.textContent = "Humidity: " + data.main.humidity;
+    var pWind = document.createElement('p');
+    pWind.classList.add('card-text');
+    pWind.textContent = "Wind Speed: " + Math.round(data.wind.speed) + "mph";
+    cardBody.append(dateDisplay, pTemp, pHumidity, pWind);
+    forecastBody.append(cardBody);
+    forecast.append(forecastBody);
 }
 function printResults(data) {
     console.log(data);
@@ -109,25 +143,16 @@ function printResults(data) {
     cardBody.classList.add('card-body');
     var pTemp = document.createElement('p');
     pTemp.classList.add('card-text');
-    pTemp.textContent = "temp: " + Math.round(data.main.temp);
+    pTemp.textContent = "Temp: " + Math.round(data.main.temp);
     var pHumidity = document.createElement('p');
     pHumidity.classList.add('card-text');
-    // value
+    pHumidity.textContent = "Humidity: " + data.main.humidity;
     var pWind = document.createElement('p');
     pWind.classList.add('card-text');
-    // value
+    pWind.textContent = "Wind Speed: " + Math.round(data.wind.speed) + "mph";
     cardBody.append(pTemp, pHumidity, pWind);
     currentBody.append(cardTitle, cardBody);
     currentDay.append(currentBody);
-
-    // print - THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
-
-    /*var forecastBody = document.createElement('div');
-    forecastBody.classList.add('forecastBody');
-    forecast.append(forecastBody); */
-
-    // print - THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
-
 } 
   
   searchFormEl.addEventListener('click', handleSearchFormSubmit);

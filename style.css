@@ -2,4 +2,19 @@ h1 {
     width: 100%;
     margin: 25px;
     text-align: center;
+    color: blue;
+}
+
+button {
+    border-radius: 5px;
+    background-color: rgb(220, 241, 246);
+    width: 25%;
+}
+
+h3 {
+    text-align: center;
+}
+
+.card-title {
+    border-radius: 5px;
 }
