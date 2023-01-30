@@ -69,6 +69,7 @@ function handleSearchFormSubmit(event) {
         forecastArray.push(data.list[i]);
       }
     }  
+    forecast.innerHTML = "";
     for(var i =0; i < forecastArray.length; i++) {
       printForecast(forecastArray[i]);
     }
@@ -104,10 +105,6 @@ function handleSearchFormSubmit(event) {
     }
  }
   buttonMenu();
-
-  function clearBox(className) {
-    document.getElementsByClassName(className).innerHTML = "";
-}
 
 function printForecast(data) {
   console.log(data);
@@ -152,6 +149,7 @@ function printResults(data) {
     pWind.textContent = "Wind Speed: " + Math.round(data.wind.speed) + "mph";
     cardBody.append(pTemp, pHumidity, pWind);
     currentBody.append(cardTitle, cardBody);
+    currentDay.innerHTML = "";
     currentDay.append(currentBody);
 } 
   

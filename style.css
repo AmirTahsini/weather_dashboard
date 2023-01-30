@@ -18,3 +18,12 @@ h3 {
 .card-title {
     border-radius: 5px;
 }
+
+#button-box button {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1 1 0;
+    margin-bottom: 5px;
+    width: 30%;
+    text-align: center;
+}
