@@ -87,7 +87,7 @@ function handleSearchFormSubmit(event) {
     document.getElementById('button-box').append(button);
     button.onclick = function() {
       console.log(this.value);
-      var queryCoordinates = 'http://api.openweathermap.org/geo/1.0/direct?q=' + this.value + '&appid=3a7640f2a9253115aec75d7159ec5537';
+      var queryCoordinates = 'https://api.openweathermap.org/geo/1.0/direct?q=' + this.value + '&appid=3a7640f2a9253115aec75d7159ec5537';
       fetch(queryCoordinates)
         .then(function (response) {
         if (!response.ok) {
